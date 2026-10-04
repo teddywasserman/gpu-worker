@@ -1,0 +1,1 @@
+{"id":"t001","cmd":"hostname; whoami; nvidia-smi; python --version; py --version; Get-PSDrive -PSProvider FileSystem | Select-Object Name,@{n='FreeGB';e={[math]::Round($_.Free/1GB)}}; Get-CimInstance Win32_Processor | Select-Object Name; [math]::Round((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory/1GB)","timeout_min":5}
