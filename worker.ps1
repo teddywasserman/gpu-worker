@@ -2,6 +2,10 @@
 # Outbound only (git over HTTPS), so no inbound ports/SSH are needed.
 # Job file: jobs/<id>.json  {"id":"...", "cmd":"<powershell command>", "cwd":"C:\gpu-work", "timeout_min":60}
 $ErrorActionPreference = "Continue"
+# Scheduled tasks may start with a stale PATH right after Git was installed: use full paths.
+foreach ($g in @("C:\Program Files\Git\cmd\git.exe", "C:\Program Files (x86)\Git\cmd\git.exe")) { if (Test-Path $g) { Set-Alias -Name git -Value $g -Scope Script; break } }
+$env:Path += ";C:\Windows\System32;C:\Program Files\NVIDIA Corporation\NVSMI"
+Start-Transcript -Path (Join-Path $env:TEMP "gpu-worker.log") -Append | Out-Null
 $repo = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $repo
 $lastBeat = Get-Date "2000-01-01"
